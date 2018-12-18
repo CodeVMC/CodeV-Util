@@ -4,6 +4,7 @@ import org.bukkit.inventory.ItemStack;
 
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Optional;
 
 public class LoreReplacementManager {
 
@@ -19,10 +20,8 @@ public class LoreReplacementManager {
         functionMap.put(functionName, function);
     }
 
-    public Map<String, Object> getReplacement(String replacementName, ItemStack stack) {
-        if (functionMap.containsKey(replacementName))
-            return functionMap.get(replacementName).get(stack);
-        return new HashMap<>();
+    public Optional<ReplacementFunction> getReplacement(String replacementName) {
+        return Optional.ofNullable(functionMap.get(replacementName));
     }
 
 }

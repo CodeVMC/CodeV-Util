@@ -3,6 +3,7 @@ package net.codev.util.lore;
 import me.dpohvar.powernbt.api.NBTCompound;
 import me.dpohvar.powernbt.api.NBTManager;
 import net.codev.util.lore.replacement.LoreReplacementManager;
+import net.codev.util.lore.replacement.ReplacementFunction;
 import net.codev.util.lore.util.ItemLoreHelper;
 import org.bukkit.Bukkit;
 import org.bukkit.Material;
@@ -39,17 +40,17 @@ public class ItemLoreHandler {
                         .getOnlinePlayers()
                         .stream()
                         .filter(viewHander::viewing)
-                        .collect(ArrayList<ItemStack>::new,(list,player)->list.addAll(getViewingItem(player)),ArrayList::addAll)
-                        .stream()
-                        .filter(stack -> stack!=null)
-                        .filter(stack -> stack.getType()!= Material.AIR)
-                        .forEach(stack->{
-                            LoreManager.getTemplateLore(stack)
-                                    .ifPresent(lore-> ItemLoreHelper.setLore(stack,lore.get(getMap(stack))));
+                        .forEach(player->{
+                            getViewingItems(player)
+                                    .stream()
+                                    .filter(stack -> stack!=null)
+                                    .filter(stack -> !stack.getType().equals(Material.AIR))
+                                    .forEach(stack -> LoreManager.getTemplateLore(stack)
+                                            .ifPresent(lore-> ItemLoreHelper.setLore(stack,lore.get(getAllReplacementMapsInStack(player,stack)))));
                         });
             }
 
-            private List<ItemStack> getViewingItem(Player player) {
+            private List<ItemStack> getViewingItems(Player player) {
                 List<ItemStack> list = new ArrayList<>();
                 InventoryView view = player.getOpenInventory();
                 list.addAll(Arrays.asList(view.getBottomInventory().getContents()));
@@ -58,12 +59,17 @@ public class ItemLoreHandler {
                 return list;
             }
 
-            private Map<String,Object> getMap(ItemStack stack){
+            private Map<String,Object> getAllReplacementMapsInStack(Player owner, ItemStack stack){
                 Set<String> set = getBindList(stack);
                 return set
                         .stream()
-                        .collect(HashMap::new,(map,replacementName)->map.putAll(loreReplacementManager.getReplacement(replacementName,stack)),
+                        .collect(HashMap::new,(map,replacementName)->map.putAll(getReplacementMap(owner,stack,replacementName)),
                                 HashMap::putAll);
+            }
+            
+            private Map<String,Object> getReplacementMap(Player owner,ItemStack stack,String replacementName){
+                ReplacementFunction function = loreReplacementManager.getReplacement(replacementName).orElse((player,name)->new HashMap<>());
+                return function.get(owner,stack);
             }
         }.runTaskTimer(plugin, 5, 1);
     }
