@@ -40,14 +40,15 @@ public class ItemLoreHandler {
                         .getOnlinePlayers()
                         .stream()
                         .filter(viewHander::viewing)
-                        .forEach(player->{
-                            getViewingItems(player)
-                                    .stream()
-                                    .filter(stack -> stack!=null)
-                                    .filter(stack -> !stack.getType().equals(Material.AIR))
-                                    .forEach(stack -> LoreManager.getTemplateLore(stack)
-                                            .ifPresent(lore-> ItemLoreHelper.setLore(stack,lore.get(getAllReplacementMapsInStack(player,stack)))));
-                        });
+                        .forEach(player-> getViewingItems(player)
+                                .stream()
+                                .filter(stack -> !isNone(stack))
+                                .forEach(stack -> LoreManager.getTemplateLore(stack)
+                                        .ifPresent(lore-> ItemLoreHelper.setLore(stack,lore.get(getAllReplacementMapsInStack(player,stack))))));
+            }
+
+            private boolean isNone(ItemStack stack){
+                return stack==null||stack.getType().equals(Material.AIR);
             }
 
             private List<ItemStack> getViewingItems(Player player) {

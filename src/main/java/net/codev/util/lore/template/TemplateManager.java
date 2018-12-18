@@ -5,6 +5,7 @@ import me.dpohvar.powernbt.api.NBTManager;
 import me.dpohvar.powernbt.nbt.NBTTagByteArray;
 import net.codev.util.lore.Lore;
 import net.codev.util.nbt.NBTHelper;
+import net.codev.util.serialization.NBTObjectSerializableHelper;
 import org.bukkit.inventory.ItemStack;
 
 import java.io.IOException;
@@ -23,7 +24,7 @@ public class TemplateManager {
     public static void setItemTemplate(ItemStack stack, Lore template) {
         NBTCompound stackCompound = NBTHelper.getNBT(stack);
         try {
-            NBTTagByteArray bytes = NBTHelper.objectToNBTTagByteArray(template);
+            NBTTagByteArray bytes = NBTObjectSerializableHelper.objectToNBTTagByteArray(template);
             stackCompound.put(TEMPLATE_KEY, bytes);
             nbtManager.write(stack, stackCompound);
         } catch (IOException e) {
@@ -34,9 +35,9 @@ public class TemplateManager {
     public static Optional<Lore> getTemplate(ItemStack stack) {
         NBTCompound compound = NBTHelper.getNBT(stack);
         if (compound.containsKey(TEMPLATE_KEY)) {
-            NBTTagByteArray bytes = NBTHelper.getNBTTagByteArray(compound, TEMPLATE_KEY);
+            NBTTagByteArray bytes = NBTObjectSerializableHelper.getNBTTagByteArray(compound, TEMPLATE_KEY);
             try {
-                return Optional.of(NBTHelper.nbtTagByteArrayToObject(bytes));
+                return Optional.of(NBTObjectSerializableHelper.nbtTagByteArrayToObject(bytes));
             } catch (IOException e) {
                 e.printStackTrace();
             } catch (ClassNotFoundException e) {
