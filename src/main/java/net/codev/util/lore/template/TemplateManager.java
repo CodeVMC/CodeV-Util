@@ -4,7 +4,7 @@ import me.dpohvar.powernbt.api.NBTCompound;
 import me.dpohvar.powernbt.api.NBTManager;
 import me.dpohvar.powernbt.nbt.NBTTagByteArray;
 import net.codev.util.lore.Lore;
-import net.codev.util.lore.util.NBTHelper;
+import net.codev.util.nbt.NBTHelper;
 import org.bukkit.inventory.ItemStack;
 
 import java.io.IOException;

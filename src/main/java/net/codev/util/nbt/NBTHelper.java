@@ -1,4 +1,4 @@
-package net.codev.util.lore.util;
+package net.codev.util.nbt;
 
 import me.dpohvar.powernbt.api.NBTCompound;
 import me.dpohvar.powernbt.api.NBTList;
