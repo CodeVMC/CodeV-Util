@@ -1,10 +1,10 @@
-package net.codev.util.lore;
+package net.codevmc.util.lore;
 
 import me.dpohvar.powernbt.api.NBTCompound;
 import me.dpohvar.powernbt.api.NBTManager;
-import net.codev.util.lore.replacement.LoreReplacementManager;
-import net.codev.util.lore.replacement.ReplacementFunction;
-import net.codev.util.lore.util.ItemLoreHelper;
+import net.codevmc.util.lore.replacement.LoreReplacementManager;
+import net.codevmc.util.lore.replacement.ReplacementFunction;
+import net.codevmc.util.lore.util.ItemLoreHelper;
 import org.bukkit.Bukkit;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
@@ -69,7 +69,7 @@ public class ItemLoreHandler {
             }
             
             private Map<String,Object> getReplacementMap(Player owner,ItemStack stack,String replacementName){
-                ReplacementFunction function = loreReplacementManager.getReplacement(replacementName).orElse((player,name)->new HashMap<>());
+                ReplacementFunction function = loreReplacementManager.getReplacement(replacementName).orElse((player, name)->new HashMap<>());
                 return function.get(owner,stack);
             }
         }.runTaskTimer(plugin, 5, 1);
@@ -93,6 +93,7 @@ public class ItemLoreHandler {
     private void setBindList(ItemStack stack, Set<String> list) {
         NBTCompound stackCompound = nbtManager.read(stack);
         stackCompound.put(REPLACEMENT_LIST_KEY, list);
+        nbtManager.write(stack,stackCompound);
     }
 
     public void unbind(ItemStack stack, String replacementName) {

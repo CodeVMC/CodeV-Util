@@ -1,4 +1,4 @@
-package net.codev.util.lore;
+package net.codevmc.util.lore;
 
 import org.bukkit.plugin.java.JavaPlugin;
 

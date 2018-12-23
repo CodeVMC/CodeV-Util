@@ -1,11 +1,11 @@
-package net.codev.util.lore.template;
+package net.codevmc.util.lore.template;
 
 import me.dpohvar.powernbt.api.NBTCompound;
 import me.dpohvar.powernbt.api.NBTManager;
 import me.dpohvar.powernbt.nbt.NBTTagByteArray;
-import net.codev.util.lore.Lore;
-import net.codev.util.nbt.NBTHelper;
-import net.codev.util.serialization.NBTObjectSerializableHelper;
+import net.codevmc.util.lore.Lore;
+import net.codevmc.util.nbt.NBTHelper;
+import net.codevmc.util.serialization.NBTObjectSerializeHelper;
 import org.bukkit.inventory.ItemStack;
 
 import java.io.IOException;
@@ -16,7 +16,7 @@ public class TemplateManager {
 
     private static final String TEMPLATE_KEY = "lore_template";
 
-    //TODO cache the serialized paragrah
+    //TODO cache the serialized paragraph
     private static final HashMap<String, Lore> templateLoreCache = new HashMap<>();
 
     private static NBTManager nbtManager = NBTManager.getInstance();
@@ -24,7 +24,7 @@ public class TemplateManager {
     public static void setItemTemplate(ItemStack stack, Lore template) {
         NBTCompound stackCompound = NBTHelper.getNBT(stack);
         try {
-            NBTTagByteArray bytes = NBTObjectSerializableHelper.objectToNBTTagByteArray(template);
+            NBTTagByteArray bytes = NBTObjectSerializeHelper.objectToNBTTagByteArray(template);
             stackCompound.put(TEMPLATE_KEY, bytes);
             nbtManager.write(stack, stackCompound);
         } catch (IOException e) {
@@ -35,9 +35,9 @@ public class TemplateManager {
     public static Optional<Lore> getTemplate(ItemStack stack) {
         NBTCompound compound = NBTHelper.getNBT(stack);
         if (compound.containsKey(TEMPLATE_KEY)) {
-            NBTTagByteArray bytes = NBTObjectSerializableHelper.getNBTTagByteArray(compound, TEMPLATE_KEY);
+            NBTTagByteArray bytes = NBTObjectSerializeHelper.getNBTTagByteArray(compound, TEMPLATE_KEY);
             try {
-                return Optional.of(NBTObjectSerializableHelper.nbtTagByteArrayToObject(bytes));
+                return Optional.of(NBTObjectSerializeHelper.nbtTagByteArrayToObject(bytes));
             } catch (IOException e) {
                 e.printStackTrace();
             } catch (ClassNotFoundException e) {

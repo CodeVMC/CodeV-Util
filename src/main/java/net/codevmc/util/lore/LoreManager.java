@@ -1,11 +1,6 @@
-package net.codev.util.lore;
+package net.codevmc.util.lore;
 
-import net.codev.util.lore.paragrah.ParagraphListLore;
-import net.codev.util.lore.paragrah.line.ParagraphLine;
-import net.codev.util.lore.paragrah.line.ListParagraphLine;
-import net.codev.util.lore.paragrah.paragraph.Paragraph;
-import net.codev.util.lore.paragrah.paragraph.TextParagraph;
-import net.codev.util.lore.template.TemplateManager;
+import net.codevmc.util.lore.template.TemplateManager;
 import org.bukkit.inventory.ItemStack;
 
 import java.util.Optional;

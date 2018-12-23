@@ -1,9 +1,6 @@
-package net.codev.util.lore.replacement;
-
-import org.bukkit.inventory.ItemStack;
+package net.codevmc.util.lore.replacement;
 
 import java.util.HashMap;
-import java.util.Map;
 import java.util.Optional;
 
 public class LoreReplacementManager {

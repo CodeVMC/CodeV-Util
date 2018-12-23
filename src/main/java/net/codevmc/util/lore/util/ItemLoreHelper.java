@@ -1,9 +1,9 @@
-package net.codev.util.lore.util;
+package net.codevmc.util.lore.util;
 
 import me.dpohvar.powernbt.api.NBTCompound;
 import me.dpohvar.powernbt.api.NBTList;
 import me.dpohvar.powernbt.api.NBTManager;
-import net.codev.util.nbt.NBTHelper;
+import net.codevmc.util.nbt.NBTHelper;
 import org.bukkit.inventory.ItemStack;
 
 import java.util.List;

@@ -1,5 +1,5 @@
 name: CodeV-Util
 version: 0.0.1
-main: net.codev.util.UtilPlugin
+main: UtilPlugin
 depend:
   - PowerNBT

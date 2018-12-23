@@ -1,4 +1,4 @@
-package net.codev.util.nbt;
+package net.codevmc.util.nbt;
 
 import me.dpohvar.powernbt.api.NBTCompound;
 import me.dpohvar.powernbt.api.NBTManager;

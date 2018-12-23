@@ -1,6 +1,6 @@
-package net.codev.util;
+package net.codevmc.util;
 
-import net.codev.util.lore.ItemLoreHandler;
+import net.codevmc.util.lore.ItemLoreHandler;
 import org.bukkit.plugin.java.JavaPlugin;
 
 public class UtilPlugin extends JavaPlugin {

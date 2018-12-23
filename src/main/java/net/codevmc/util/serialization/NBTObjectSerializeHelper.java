@@ -1,4 +1,4 @@
-package net.codev.util.serialization;
+package net.codevmc.util.serialization;
 
 import me.dpohvar.powernbt.api.NBTCompound;
 import me.dpohvar.powernbt.api.NBTList;
@@ -9,7 +9,7 @@ import java.io.*;
 /**
  *based on {@link Serializable}.
  */
-public class NBTObjectSerializableHelper {
+public class NBTObjectSerializeHelper {
 
     public static NBTTagByteArray objectToNBTTagByteArray(Object o) throws IOException {
         ByteArrayOutputStream bos = new ByteArrayOutputStream();

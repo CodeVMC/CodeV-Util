@@ -1,10 +1,10 @@
-package net.codev.util.lore.paragrah;
+package net.codevmc.util.lore.paragraph;
 
-import net.codev.util.lore.Lore;
-import net.codev.util.lore.paragrah.line.ListParagraphLine;
-import net.codev.util.lore.paragrah.line.ParagraphLine;
-import net.codev.util.lore.paragrah.paragraph.Paragraph;
-import net.codev.util.lore.paragrah.paragraph.TextParagraph;
+import net.codevmc.util.lore.Lore;
+import net.codevmc.util.lore.paragraph.line.ListParagraphLine;
+import net.codevmc.util.lore.paragraph.line.ParagraphLine;
+import net.codevmc.util.lore.paragraph.paragraph.Paragraph;
+import net.codevmc.util.lore.paragraph.paragraph.TextParagraph;
 
 public class ParagraphLoreBuilder {
     private Lore lore = new ParagraphListLore();
