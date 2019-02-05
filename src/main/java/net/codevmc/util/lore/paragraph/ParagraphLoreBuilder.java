@@ -7,7 +7,7 @@ import net.codevmc.util.lore.paragraph.paragraph.Paragraph;
 import net.codevmc.util.lore.paragraph.paragraph.TextParagraph;
 
 public class ParagraphLoreBuilder {
-    private Lore lore = new ParagraphListLore();
+    private ParagraphListLore lore = new ParagraphListLore();
 
     public LineBuilder editLore(){
         return new LineBuilder(this);

@@ -18,7 +18,6 @@ public class ParagraphListLore implements Lore {
                 .collect(ArrayList::new,(list,line)->list.add(line.getLine(map)),ArrayList::addAll);
     }
 
-    @Override
     public void addLine(ParagraphLine line) {
         lines.add(line);
     }

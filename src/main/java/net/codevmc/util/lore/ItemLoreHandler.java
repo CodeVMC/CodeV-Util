@@ -24,13 +24,13 @@ public class ItemLoreHandler {
 
     private final JavaPlugin plugin;
     private NBTManager nbtManager = NBTManager.getInstance();
-    private PlayerViewInventoryHandler viewHander;
+    private PlayerViewInventoryHandler viewHandler;
 
     public ItemLoreHandler(JavaPlugin plugin) {
         INSTANCE = this;
         this.plugin = plugin;
-        viewHander = new PlayerViewInventoryHandler();
-        Bukkit.getServer().getPluginManager().registerEvents(viewHander,plugin);
+        viewHandler = new PlayerViewInventoryHandler();
+        Bukkit.getServer().getPluginManager().registerEvents(viewHandler,plugin);
         new BukkitRunnable() {
 
             private final LoreReplacementManager loreReplacementManager = LoreReplacementManager.getInstance();
@@ -39,7 +39,7 @@ public class ItemLoreHandler {
                 Bukkit
                         .getOnlinePlayers()
                         .stream()
-                        .filter(viewHander::viewing)
+                        .filter(viewHandler::viewing)
                         .forEach(player-> getViewingItems(player)
                                 .stream()
                                 .filter(stack -> !isNone(stack))
