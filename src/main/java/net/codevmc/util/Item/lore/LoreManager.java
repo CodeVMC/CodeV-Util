@@ -63,6 +63,7 @@ public class LoreManager {
         }
 
         private boolean watchingInventory(Player p){
+            //TODO need found a way to know when player watching inventory
             return false;
         }
 
