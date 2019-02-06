@@ -1,10 +1,10 @@
-package net.codevmc.util.lore;
+package net.codevmc.util.Item.lore;
 
 import me.dpohvar.powernbt.api.NBTCompound;
 import me.dpohvar.powernbt.api.NBTManager;
-import net.codevmc.util.lore.replacement.LoreReplacementManager;
-import net.codevmc.util.lore.replacement.ReplacementFunction;
-import net.codevmc.util.lore.util.ItemLoreHelper;
+import net.codevmc.util.Item.lore.replacement.LoreReplacementManager;
+import net.codevmc.util.Item.lore.replacement.ReplacementFunction;
+import net.codevmc.util.Item.lore.util.ItemLoreHelper;
 import org.bukkit.Bukkit;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;

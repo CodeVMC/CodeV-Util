@@ -1,9 +1,9 @@
-package net.codevmc.util.lore.template;
+package net.codevmc.util.Item.lore.template;
 
 import me.dpohvar.powernbt.api.NBTCompound;
 import me.dpohvar.powernbt.api.NBTManager;
 import me.dpohvar.powernbt.nbt.NBTTagByteArray;
-import net.codevmc.util.lore.Lore;
+import net.codevmc.util.Item.lore.Lore;
 import net.codevmc.util.nbt.NBTHelper;
 import net.codevmc.util.serialization.NBTObjectSerializeHelper;
 import org.bukkit.inventory.ItemStack;

@@ -1,4 +1,6 @@
-package net.codevmc.util.lore.paragraph.paragraph;
+package net.codevmc.util.Item.lore.paragraph.paragraph;
+
+import net.codevmc.util.Item.lore.paragraph.Paragraph;
 
 import java.util.Map;
 

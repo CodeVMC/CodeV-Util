@@ -1,4 +1,4 @@
-package net.codevmc.util.lore.replacement;
+package net.codevmc.util.Item.lore.replacement;
 
 import java.util.HashMap;
 import java.util.Optional;

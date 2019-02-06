@@ -1,7 +1,7 @@
-package net.codevmc.util.lore.paragraph;
+package net.codevmc.util.Item.lore.paragraph;
 
-import net.codevmc.util.lore.Lore;
-import net.codevmc.util.lore.paragraph.line.ParagraphLine;
+import net.codevmc.util.Item.lore.Lore;
+import net.codevmc.util.Item.lore.paragraph.line.ParagraphLine;
 
 import java.util.ArrayList;
 import java.util.List;

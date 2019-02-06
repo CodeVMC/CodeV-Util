@@ -1,4 +1,4 @@
-package net.codevmc.util.lore.replacement;
+package net.codevmc.util.Item.lore.replacement;
 
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
