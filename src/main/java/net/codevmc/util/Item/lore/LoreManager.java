@@ -1,7 +1,11 @@
 package net.codevmc.util.Item.lore;
 
+import me.dpohvar.powernbt.api.NBTCompound;
+import me.dpohvar.powernbt.api.NBTManager;
 import net.codevmc.util.Item.ItemUUID;
 import net.codevmc.util.Item.lore.util.ItemLoreHelper;
+import net.codevmc.util.nbt.NBTHelper;
+import net.codevmc.util.serialization.SerializationHelper;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.InventoryView;
@@ -17,6 +21,8 @@ public class LoreManager {
     private ConcurrentHashMap<UUID, Lore> bindMap = new ConcurrentHashMap<>();
 
     private static LoreManager INSTANCE;
+
+    private static final String LORE_KEY = "CODEV_LORE";
 
     public static long ASYNC_UPDATE_RATE = 1;
 
@@ -36,10 +42,25 @@ public class LoreManager {
 
     public void bindLore(ItemStack item, Lore lore) {
         bindMap.put(ItemUUID.getUUID(item).orElseGet(() -> ItemUUID.addUUID(item)), lore);
+        saveSerializeLoreInItem(item,lore);
     }
 
     public Lore getBindLore(ItemStack item) {
         return bindMap.get(ItemUUID.getUUID(item).get());
+    }
+
+    private void saveSerializeLoreInItem(ItemStack stack,Lore lore){
+        NBTCompound compound = NBTHelper.getNBT(stack);
+        compound.put(LORE_KEY, SerializationHelper.serialize(lore));
+        NBTHelper.write(stack,compound);
+    }
+
+    private boolean haveSerializeLore(ItemStack stack){
+        return NBTHelper.getNBT(stack).containsKey(LORE_KEY);
+    }
+
+    private Lore getSerializeLore(ItemStack stack){
+        return SerializationHelper.deserialize(NBTHelper.getNBT(stack).getString(LORE_KEY));
     }
 
     private class FlushLore extends BukkitRunnable{
@@ -54,26 +75,34 @@ public class LoreManager {
         public void run() {
             for(Player p : Bukkit.getOnlinePlayers()){
                 if(watchingInventory(p)){
-                    p.getInventory().forEach(this::updateItemIfCan);
+                    p.getInventory().forEach(this::updateItemIfCanAndTryLoadLore);
                     InventoryView view = p.getOpenInventory();
                     if(view.getTopInventory()!=null)
-                        view.getTopInventory().forEach(this::updateItemIfCan);
+                        view.getTopInventory().forEach(this::updateItemIfCanAndTryLoadLore);
                 }
             }
         }
 
         private boolean watchingInventory(Player p){
-            //TODO need found a way to know when player watching inventory
+            //TODO need to find a way to know that the player is watching at inventory
             return false;
         }
 
-        private void updateItemIfCan(ItemStack stack){
+        private void updateItemIfCanAndTryLoadLore(ItemStack stack){
             ItemUUID.getUUID(stack)
                     .ifPresent(uuid->{
                         if(update.needFlushLore.remove(uuid)){
                             ItemLoreHelper.setLore(stack,update.cacheLore.get(uuid));
+                            saveSerializeLoreInItem(stack,bindMap.get(uuid));
                         }
+                        if(!bindMap.contains(uuid)&&haveSerializeLore(stack))
+                            ifHasUUIDTryLoadLore(uuid,stack);
                     });
+        }
+
+        private void ifHasUUIDTryLoadLore(UUID uuid,ItemStack stack){
+            if(haveSerializeLore(stack))
+                bindMap.put(uuid,getSerializeLore(stack));
         }
     }
 
