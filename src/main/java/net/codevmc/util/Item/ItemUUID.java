@@ -14,11 +14,15 @@ public class ItemUUID {
 
     private static NBTManager nbtManager = NBTManager.getInstance();
 
-    public static void addUUID(ItemStack stack){
+    public static UUID addUUID(ItemStack stack){
         NBTCompound compound = nbtManager.read(stack);
         if(compound==null)
             compound = new NBTCompound();
-        compound.put(UUID_KEY, SerializationHelper.serialize(UUID.randomUUID().toString()));
+        if(compound.containsKey(UUID_KEY))
+            return UUID.fromString(compound.getString(UUID_KEY));
+        UUID uuid = UUID.randomUUID();
+        compound.put(UUID_KEY, SerializationHelper.serialize(uuid.toString()));
+        return uuid;
     }
 
     public static Optional<UUID> getUUID(ItemStack stack){
