@@ -1,11 +1,5 @@
 package net.codevmc.util.Item.lore.paragraph;
 
-import java.util.List;
+import net.codevmc.util.Item.lore.Lore;
 
-public interface Paragraph {
-
-    List<String> getParagraph();
-    default void update(){}
-    default void asyncUpdate(){}
-
-}
+public abstract class Paragraph extends Lore {}

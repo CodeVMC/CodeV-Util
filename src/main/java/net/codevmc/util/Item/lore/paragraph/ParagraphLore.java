@@ -1,6 +1,7 @@
 package net.codevmc.util.Item.lore.paragraph;
 
 import net.codevmc.util.Item.lore.Lore;
+import net.codevmc.util.Item.lore.util.LockArrayLore;
 import net.codevmc.util.serialization.Serialization;
 
 import java.util.ArrayList;
@@ -11,54 +12,32 @@ import java.util.concurrent.locks.ReentrantLock;
 public class ParagraphLore extends Lore {
 
     @Serialization
-    private List<Paragraph> paragraphList = new ArrayList<>();
-
-    private Lock lock = new ReentrantLock();
+    private LockArrayLore lockLore = new LockArrayLore();
 
     @Override
     public List<String> get() {
-        try {
-            lock.lock();
-            return paragraphList
-                    .stream()
-                    .collect(ArrayList::new, (list, p) -> list.addAll(p.getParagraph()), ArrayList::addAll);
-        } finally {
-            lock.unlock();
-        }
+        return lockLore.get();
     }
 
     public void addParagraph(Paragraph paragraph) {
-        lock.lock();
-        this.paragraphList.add(paragraph);
-        lock.unlock();
+        lockLore.add(paragraph);
     }
 
     public void removeParagraph(Paragraph paragraph) {
-        lock.lock();
-        this.paragraphList.remove(paragraph);
-        lock.unlock();
+        lockLore.remove(paragraph);
     }
 
     public boolean hasParagraph(Paragraph paragraph) {
-        try {
-            lock.lock();
-            return this.paragraphList.contains(paragraph);
-        } finally {
-            lock.unlock();
-        }
+        return lockLore.has(paragraph);
     }
 
     @Override
     public void asyncUpdate() {
-        lock.lock();
-        paragraphList.forEach(Paragraph::asyncUpdate);
-        lock.unlock();
+        lockLore.asyncUpdate();
     }
 
     @Override
     public void update() {
-        lock.lock();
-        paragraphList.forEach(Paragraph::update);
-        lock.unlock();
+        lockLore.update();
     }
 }
