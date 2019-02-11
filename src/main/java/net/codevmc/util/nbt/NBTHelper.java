@@ -19,4 +19,8 @@ public class NBTHelper {
         return nbtCompound;
     }
 
+    public static void write(ItemStack stack,NBTCompound compound){
+        nbtManager.write(stack,compound);
+    }
+
 }
