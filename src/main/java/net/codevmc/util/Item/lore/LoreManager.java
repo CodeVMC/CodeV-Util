@@ -4,6 +4,7 @@ import me.dpohvar.powernbt.api.NBTCompound;
 import me.dpohvar.powernbt.api.NBTManager;
 import net.codevmc.util.Item.ItemUUID;
 import net.codevmc.util.Item.lore.util.ItemLoreHelper;
+import net.codevmc.util.UtilPlugin;
 import net.codevmc.util.nbt.NBTHelper;
 import net.codevmc.util.serialization.SerializationHelper;
 import org.bukkit.Bukkit;
@@ -26,10 +27,7 @@ public class LoreManager {
 
     public static long ASYNC_UPDATE_RATE = 1;
 
-    public LoreManager(JavaPlugin plugin) {
-        if (INSTANCE == null)
-            INSTANCE = this;
-        else return;
+    private LoreManager(JavaPlugin plugin) {
         SyncUpdate update =new SyncUpdate();
         update.runTaskTimer(plugin, 1, 1);
         new FlushLore(update).runTaskTimer(plugin,1,1);
@@ -37,6 +35,8 @@ public class LoreManager {
     }
 
     public static LoreManager getInstance() {
+        if(INSTANCE==null)
+            INSTANCE = new LoreManager(UtilPlugin.getINSTANCE());
         return INSTANCE;
     }
 
