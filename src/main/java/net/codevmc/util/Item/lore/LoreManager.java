@@ -27,11 +27,15 @@ public class LoreManager {
 
     public static long ASYNC_UPDATE_RATE = 1;
 
+    private final Thread asyncUpdateThread;
+
     private LoreManager(JavaPlugin plugin) {
         SyncUpdate update =new SyncUpdate();
         update.runTaskTimer(plugin, 1, 1);
         new FlushLore(update).runTaskTimer(plugin,1,1);
-        new Thread(new AsyncUpdate()).start();
+        asyncUpdateThread = new Thread(new AsyncUpdate(),"AsyncUpdateThread");
+        asyncUpdateThread.start();
+        UtilPlugin.callOnDisable(()->asyncUpdateThread.interrupt());
     }
 
     public static LoreManager getInstance() {
@@ -47,6 +51,12 @@ public class LoreManager {
 
     public Lore getBindLore(ItemStack item) {
         return bindMap.get(ItemUUID.getUUID(item).get());
+    }
+
+    public void unbind(ItemStack item){
+        NBTCompound compound = NBTHelper.getNBT(item);
+        compound.remove(LORE_KEY);
+        NBTHelper.write(item,compound);
     }
 
     private void saveSerializeLoreInItem(ItemStack stack,Lore lore){
@@ -148,4 +158,5 @@ public class LoreManager {
             }
         }
     }
+
 }

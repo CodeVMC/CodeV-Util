@@ -8,10 +8,10 @@ import java.util.List;
 import java.util.concurrent.locks.Lock;
 import java.util.concurrent.locks.ReentrantLock;
 
-public class LockArrayLore extends Lore {
+public class  LockArrayLore<T extends Lore>  extends Lore {
 
     @Serialization
-    private ArrayList<Lore> loreArrayList = new ArrayList<>();
+    private ArrayList<T> loreArrayList = new ArrayList<>();
 
     private Lock lock;
 
@@ -49,22 +49,22 @@ public class LockArrayLore extends Lore {
         lock.unlock();
     }
 
-    public void add(Lore paragraph) {
+    public void add(T lore) {
         lock.lock();
-        this.loreArrayList.add(paragraph);
+        this.loreArrayList.add(lore);
         lock.unlock();
     }
 
-    public void remove(Lore paragraph) {
+    public void remove(T lore) {
         lock.lock();
-        this.loreArrayList.remove(paragraph);
+        this.loreArrayList.remove(lore);
         lock.unlock();
     }
 
-    public boolean has(Lore paragraph) {
+    public boolean has(T lore) {
         try {
             lock.lock();
-            return this.loreArrayList.contains(paragraph);
+            return this.loreArrayList.contains(lore);
         } finally {
             lock.unlock();
         }

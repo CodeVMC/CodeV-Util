@@ -31,17 +31,13 @@ public class ItemUUID {
                 }
             });
 
-    private static NBTManager nbtManager = NBTManager.getInstance();
-
     /**
      *add a new uuid to stack.
      * @param stack
      * @return created uuid
      */
     public static UUID addUUID(ItemStack stack){
-        NBTCompound compound = nbtManager.read(stack);
-        if(compound==null)
-            compound = new NBTCompound();
+        NBTCompound compound = NBTHelper.getNBT(stack);
         if(compound.containsKey(UUID_KEY))
             return UUID.fromString(compound.getString(UUID_KEY));
         UUID uuid = UUID.randomUUID();
@@ -64,6 +60,12 @@ public class ItemUUID {
     private static UUID getUUIDFromNBT(ItemStack stack){
         NBTCompound compound = NBTHelper.getNBT(stack);
         return UUID.fromString(compound.getString(UUID_KEY));
+    }
+
+    public static void removeUUID(ItemStack stack){
+        NBTCompound compound = NBTHelper.getNBT(stack);
+        compound.remove(UUID_KEY);
+        NBTHelper.write(stack,compound);
     }
 
 }
