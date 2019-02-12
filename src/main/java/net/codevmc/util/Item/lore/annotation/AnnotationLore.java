@@ -4,8 +4,8 @@ import net.codevmc.util.Item.lore.Lore;
 
 
 public abstract class AnnotationLore<T> extends Lore {
-    protected final T t;
-    public AnnotationLore(T t){
-        this.t = t;
+    protected final T element;
+    public AnnotationLore(T element){
+        this.element = element;
     }
 }

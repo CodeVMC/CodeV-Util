@@ -6,7 +6,6 @@ import com.google.common.cache.LoadingCache;
 import com.google.common.collect.Lists;
 
 import java.lang.reflect.InvocationTargetException;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.ExecutionException;
 import java.util.concurrent.TimeUnit;
@@ -17,7 +16,7 @@ public class AnnotationManager {
             .newBuilder()
             .maximumSize(100)
             .initialCapacity(10)
-            .concurrencyLevel(8)
+            .concurrencyLevel(3)
             .expireAfterAccess(20, TimeUnit.MINUTES)
             .build(new CacheLoader<Object, Class>() {
                 @Override
@@ -26,13 +25,13 @@ public class AnnotationManager {
                 }
             });
 
-    public static List<String> getLore(Object o){
+    public static net.codevmc.util.Item.lore.Lore getLore(Object o){
         try {
-            return ((AnnotationLore)cache.get(o).getConstructor(Object.class).newInstance(o)).get();
+            return ((AnnotationLore)cache.get(o).getConstructor(Object.class).newInstance(o));
         } catch (ExecutionException | NoSuchMethodException | InstantiationException | IllegalAccessException | InvocationTargetException e) {
             e.printStackTrace();
         }
-        return new ArrayList<>();
+        return null;
     }
 
     private static Class getClassFromAnnotation(Object o){
@@ -48,7 +47,7 @@ public class AnnotationManager {
         }
         @Override
         public List<String> get() {
-            return Lists.newArrayList(t.toString());
+            return Lists.newArrayList(element.toString());
         }
     }
 
