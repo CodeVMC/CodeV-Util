@@ -25,7 +25,7 @@ public class LoreManager {
 
     private static final String LORE_KEY = "CODEV_LORE";
 
-    public static long ASYNC_UPDATE_RATE = 1;
+    public static long ASYNC_UPDATE_RATE = 10;
 
     private final Thread asyncUpdateThread;
 
@@ -95,7 +95,7 @@ public class LoreManager {
 
         private boolean watchingInventory(Player p){
             //TODO need to find a way to know that the player is watching at inventory
-            return false;
+            return true;
         }
 
         private void updateItemIfCanAndTryLoadLore(ItemStack stack){
